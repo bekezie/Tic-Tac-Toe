@@ -1,15 +1,61 @@
 import java.util.Scanner;
+
+/**
+ * This will play the game TicTacToe with two players each taking turns.
+ * Each user will insert a number from 1 to 9 to tell which space
+ * they wish to put their symbol (x or o) into.
+ * Then a winner or tie will be determined, good luck to the players.
+ *
+ * Author: Bernard Ekezie, Christopher Morris, Blake Koontz
+ * Version: 1.2
+ * since: 2020-10-20
+ *
+ * Note: Errors occur when using "at" symbol as tags show unrecognized
+ */
+
+
 public class TicTacToe1 {
-    static final char x = 'x';
-    static final char o = 'o';
-    static int Row = 0;
-    static int Col = 0;
-    public static void main(String[] args) {
-        // boolean used to allow user either play again or quit game
-        boolean Restart = true;
+
+        /**
+        *  constant symbol used by player x to mark spots on game board
+        */
+        static final char x = 'x';
+
+        /**
+         *  constant symbol used by player o to mark spots on game board
+        */
+        static final char o = 'o';
+
+        /**
+        *  Initialize row at 0
+        */
+        static int Row = 0;
+
+        /**
+        *  Initialize col at 0
+        */
+        static int Col = 0;
+
+
+        /**
+         *  main method for playing TicTacToe
+         *  Initialize variables for loop for game to begin
+         *  then initalize variables used at beginning of game
+         *  afterward game begins in loop with game board of 1 to 9.
+         * Prompt user for input then take in both user's
+         *  input (x and o) sequentially validate input and then
+         *  mark board till one user is winner then ask users if play again
+         * @param args Unused
+         *
+        */
+        public static void main(String[] args) {
+        boolean restart = true;
         // String used for player to enter a response to continue or end game
-        String Answer;
-        while (Restart) {
+        String answer;
+
+        while (restart) {
+
+            System.out.println("LETS PLAY");
             // initializing the entire board to "blank spaces" to bypass nullpointer exception
             char[][] board = {{'1', '2', '3'},
                     {'4', '5', '6'},
@@ -82,7 +128,7 @@ public class TicTacToe1 {
                 }
             }
             // checks to see if tie is equal to board length
-            if (tie == 9) {
+            if (tie == 9 && !x_won && !o_won) {
                 System.out.println("It's a tie!");
 
                 // prints the player who won the game
@@ -92,28 +138,40 @@ public class TicTacToe1 {
             }
             System.out.println("Play again?");
             System.out.println("Enter Yes or No");
-            Answer = keyboard.next();
-            if (Answer.equalsIgnoreCase("No"))
+
+            answer = "";
+            while(! (answer.equalsIgnoreCase("No") ||answer.equalsIgnoreCase("Yes")))
             {
-                System.out.println("QUIT GAME");
-                Restart = false;
-                System.exit(0);
+                answer = keyboard.next();
+                if (answer.equalsIgnoreCase("No"))
+                {
+                    restart = false;
+                }
+                else if (answer.equalsIgnoreCase("Yes"))
+                {
+                    restart = true;
+                }
+                else
+                {
+                    System.out.println("Invalid response, please enter valid decision!");
+                    System.out.println("Play again?");
+                    System.out.println("Enter Yes or No");
+                    restart = false;
+                }
             }
-            else if (Answer.equalsIgnoreCase("Yes"))
-            {
-                System.out.println("LETS PLAY");
-                Restart = true;
-            }
-            else
-            {
-                System.out.println("Invalid response!");
-                System.out.println("END GAME");
-                Restart = false;
-                System.exit(0);
-            }
+
         }
+        System.out.println("QUIT GAME");
+        System.exit(0);
     }
 
+    /**
+     *  Rows method for playing TicTacToe
+     *  check for input validation and indicate which row box to fill in from user input
+     * @param  position user input unchecked for validity that should indicate row box on board
+     * @return int that should be checked and validated to be correct row box on board
+     *
+     */
     // function that returns row location of position
     private static int Rows(String position)
     {
@@ -141,6 +199,13 @@ public class TicTacToe1 {
         }
     }
 
+    /**
+     *  Cols method for playing TicTacToe
+     *  check for input validation and indicate which row box to fill in from user input
+     * @param  position user input unchecked for validity that should indicate cols box on board
+     * @return int that should be checked and validated to be correct cols box on board
+     *
+     */
     // function that returns column location of position
     private static int Cols(String position)
     {
@@ -168,6 +233,14 @@ public class TicTacToe1 {
         }
     }
 
+    /**
+     *
+     * Check combinations if user wins to get 3 in a row
+     * @param  temp user input unchecked for validity that should indicate cols box on board
+     * @param board array of array that contains the game board with squares filled
+     * @return boolean that indicates true if user won and false if no win
+     *
+     */
     // Function that checks to see whether player is equal to one of the 3 locations in board: horizontal, vertical, or diagonal
     // If so it return true else it returns false
     private static boolean winnerCheck(char[][] board, char temp) {
@@ -181,6 +254,11 @@ public class TicTacToe1 {
                 (board[0][0] == (temp) && board[1][1] == (temp) && board[2][2] == (temp)));
     }
 
+    /**
+     * Print the game board everytime for visual of game
+     * @param  board array of array that contains the game board with squares filled
+     *
+     */
     //Function that prints board to screen
     public static void PrintBoard(char[][] board) {
         for (int row = 0; row < 3; row++) {
@@ -195,6 +273,8 @@ public class TicTacToe1 {
         System.out.println();
     }
 }
+
+
 
 
 
